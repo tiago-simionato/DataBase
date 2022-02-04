@@ -2,6 +2,7 @@
 RA:11201810899*/
 
 /*Questão 1*/
+/*Script para criação da base de dados (todas as tabelas)*/
 create table tbl_departamento (
 	idDepto smallint not null auto_increment primary key,
 	nomeDep varchar(50) not null,
@@ -55,6 +56,7 @@ create table tbl_ocorrencia(
 );
 
 /*Questão 2*/
+/*Script para inserção dos dados nas respectivas tabelas*/
 insert into tbl_departamento values
 (null, 'Engenharia', 1),
 (null, 'Administrativo', 2),
@@ -120,26 +122,32 @@ insert into tbl_ocorrencia values
 (timestamp '2010-05-01 17:00:00', 6, 9);
 
 /*Questão 3*/
+/*Informe consultas SQL para os seguintes casos:*/
 
 /*Item 1*/
+/*Mostrar todos os funcionários da empresa, ordenando por nome*/
 select * from tbl_funcionario order by nomeF;
 
 /*Item 2*/
+/*Mostrar o funcionário mais antigo na empresa*/
 select * from tbl_funcionario where dataAd in (select min(dataAd) from tbl_funcionario);
 
 /*Item 3*/
+/*Mostrar todos os departamentos que têm funcionários alocados*/
 select dep.idDepto,nomeDep,count(idFunc) as funcionarios
 	from tbl_funcionario as f inner join tbl_departamento as dep
 	on f.idDepto = dep.idDepto
 	group by dep.idDepto; 
 
 /*Item 4*/
+/*Mostrar todos os projetos de um determinado funcionário*/
 select f.nomeF as Funcionario, p.descrP as Projeto
 	from tbl_projeto as p inner join tbl_projfunc as pf on p.idProj = pf.idProj
 	inner join tbl_funcionario as f on f.idFunc = pf.idfunc
 	where f.idFunc = 5;
 
 /*Item 5*/
+/*Mostrar todos os funcionários que estão participando de projetos (e quais não estão)*/
 select f.nomeF as Funcionario, p.descrP as Projeto
 	from tbl_funcionario as f left outer join tbl_projfunc as pf on f.idFunc = pf.idFunc
 	left outer join tbl_projeto as p on p.idProj = pf.idProj;
